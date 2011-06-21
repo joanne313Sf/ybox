@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# Lab settings
+ifconfig eth0 192.168.1.29
+
+route del default
+route add default gw 192.168.1.1
+
+RESULT=`ping -c 4 192.168.1.1 | grep -i -s "0 received"`
+if [ "$RESULT" = "" ]
+then
+    echo The current enviroment is lab
+    exit 0
+fi
+# Lab settings end
+
+# Home settings
+ifconfig eth0 218.193.189.59
+
+route del default
+route add default gw 218.192.189.254
+
+RESULT=`ping -c 4 218.193.189.254 | grep -i -s "0 received"`
+if [ "$RESULT" = "" ]
+then
+    echo The current enviroment is home
+    exit 0
+fi
+# Home settings end
+
+echo Network setting is unavaliable
+exit 1

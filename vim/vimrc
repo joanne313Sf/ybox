@@ -1,0 +1,81 @@
+" Vim Configure File
+" Maintain by Yiheng Wang(yihengw@gmail.com)
+ 
+" Detect the OS
+if (has("win32") || has("win64") || has("win32unix"))
+    let OS="win32"
+elseif (has("unix"))
+    let OS="unix"
+endif
+
+" Detect if run in gui
+if (has("gui_running"))
+    let GUI="yes"
+else
+    let GUI="no"
+endif
+
+" Select color scheme
+if GUI=="yes"
+    colorscheme lucius
+endif
+
+" Highlight
+syntax on
+
+" Open file type support
+filetype on
+
+" Display line number
+set number
+
+" Maximize the window
+if OS=="win32"
+    au GUIEnter * simalt ~x
+endif
+
+" Set the tab setting 
+set tabstop=4
+set softtabstop=4
+set expandtab
+
+" Set indent
+set shiftwidth=4
+set cindent
+
+" Compile and run programs
+map <F6> :call Run()<CR>
+
+func! Run()
+	if &filetype == 'perl'
+		exec "!perl %<.plx"
+	endif
+endfunc
+
+" Make a gelivable backspace
+set backspace=indent,eol,start
+
+" Set common code list
+set fileencodings=utf8,gb2312
+
+" Set font
+if OS=="win32"
+    set guifont=Consolas:h12:cANSI
+endif
+
+" Set search setting
+set hlsearch
+set ignorecase
+
+" Winmanager configuration
+let g:winManagerWindowLayout = 'FileExplorer'
+let g:persistentBehaviour = 0
+map wm :WMToggle<cr>
+
+" Shorcut to comment a line in C/C++ code
+map co :s/\(^\s*\)/\1\/\/<cr>:nohl<cr>
+" Shorcut to uncomment a line in C/C++ code
+map cu :s/\(^\s*\)\/\//\1<cr>:nohl<cr>
+
+" Shortcut to dismiss the highlight on search result
+map nh :nohl<cr>
